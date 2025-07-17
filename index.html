@@ -621,14 +621,18 @@
                 const beatSound = document.getElementById('beatSound').value;
                 const subdivisionSound = document.getElementById('subdivisionSound').value;
                 
-                if (beatNumber % this.subdivision === 0) {
-                    // Accent (downbeat)
+                // Determine if this is a main beat (not just subdivision)
+                const isMainBeat = beatNumber % this.subdivision === 0;
+                const isFirstBeat = beatNumber === 0 || beatNumber % (this.subdivision * this.timeSignature[0]) === 0;
+                
+                if (isFirstBeat) {
+                    // First beat of measure gets accent sound
                     this.createDrumSound(accentSound, 0.8);
-                } else if (beatNumber % (this.subdivision / (this.subdivision > 1 ? 2 : 1)) === 0) {
-                    // Beat
+                } else if (isMainBeat) {
+                    // Other main beats get beat sound
                     this.createDrumSound(beatSound, 0.6);
                 } else {
-                    // Subdivision
+                    // Subdivisions get subdivision sound
                     this.createDrumSound(subdivisionSound, 0.4);
                 }
             }
@@ -758,4 +762,4 @@
         }
     </script>
 </body>
-</html>
+</html>>
